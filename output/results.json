@@ -458,5 +458,699 @@
         }
       ]
     }
+  },
+  {
+    "source_file": "invoice_Adam Shillingsburg_12471.pdf",
+    "invoice_id": "12471",
+    "processing_results": {
+      "extraction_confidence": 0.99,
+      "extracted_data": {
+        "supplier": "SuperStore",
+        "po_reference": null,
+        "line_items": [
+          {
+            "description": "Sauder 3-Shelf Cabinet, Mobile\nBookcases, Furniture, FUR-BO-5941",
+            "quantity": 6.0,
+            "unit_price": 507.6,
+            "line_total": 3045.6,
+            "confidence": 0.99
+          }
+        ]
+      },
+      "matching_results": {
+        "matched_po": null,
+        "match_reasoning": "Top matches had low confidence.",
+        "candidates_considered": [
+          {
+            "po_number": "PO-2024-012",
+            "confidence": 0.55,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Spectrum Chemical Supplies (Score: 0.55)"
+          },
+          {
+            "po_number": "PO-2024-007",
+            "confidence": 0.52,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Nordic Chemicals AB (Score: 0.52)"
+          },
+          {
+            "po_number": "PO-2024-008",
+            "confidence": 0.48,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: British Pharmaceutical Supply (Score: 0.48)"
+          }
+        ]
+      },
+      "discrepancies": [],
+      "recommended_action": "escalate_to_human",
+      "agent_reasoning": "System uncertainty regarding PO match.",
+      "agent_execution_trace": [
+        {
+          "agent": "Document Intelligence",
+          "status": "Success",
+          "confidence": 0.99,
+          "detail": "Extracted 1 line items. Notes: Thanks for your business!\nOrder ID: IT-2012-AS1009091-41049"
+        },
+        {
+          "agent": "Extraction Verifier",
+          "status": "Passed",
+          "confidence": 1.0,
+          "detail": "Math checks passed."
+        },
+        {
+          "agent": "Matching Agent",
+          "status": "No Match",
+          "confidence": 0.0,
+          "detail": "Top matches had low confidence."
+        },
+        {
+          "agent": "Discrepancy Detector",
+          "status": "Clean",
+          "confidence": 1.0,
+          "detail": "Found 0 discrepancies."
+        },
+        {
+          "agent": "Resolution Agent",
+          "status": "Complete",
+          "confidence": 1.0,
+          "detail": "Action: escalate_to_human. Reason: System uncertainty regarding PO match."
+        }
+      ]
+    }
+  },
+  {
+    "source_file": "invoice_Adam Shillingsburg_40245.pdf",
+    "invoice_id": "40245",
+    "processing_results": {
+      "extraction_confidence": 0.99,
+      "extracted_data": {
+        "supplier": "SuperStore",
+        "po_reference": null,
+        "line_items": [
+          {
+            "description": "Belkin 7-Outlet SurgeMaster Home Series\nAppliances, Office Supplies, OFF-AP-3367",
+            "quantity": 1.0,
+            "unit_price": 13.97,
+            "line_total": 13.97,
+            "confidence": 0.99
+          }
+        ]
+      },
+      "matching_results": {
+        "matched_po": "PO-2024-012",
+        "match_reasoning": "Hypothesized PO-2024-012 as best match. Alternatives considered: ['PO-2024-008', 'PO-2024-009']",
+        "candidates_considered": [
+          {
+            "po_number": "PO-2024-012",
+            "confidence": 0.65,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Spectrum Chemical Supplies (Score: 0.65)"
+          },
+          {
+            "po_number": "PO-2024-008",
+            "confidence": 0.56,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: British Pharmaceutical Supply (Score: 0.56)"
+          },
+          {
+            "po_number": "PO-2024-009",
+            "confidence": 0.51,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Continental Excipients GmbH (Score: 0.51)"
+          }
+        ]
+      },
+      "discrepancies": [
+        {
+          "type": "missing_po",
+          "severity": "medium",
+          "field": "po_reference",
+          "details": "Document lacks explicit reference to PO-2024-012; match inferred via supplier/content.",
+          "invoice_value": null,
+          "po_value": "PO-2024-012",
+          "confidence": 0.85
+        },
+        {
+          "type": "qty_mismatch",
+          "severity": "medium",
+          "field": "line_item_0",
+          "details": "Item 'Belkin 7-Outlet SurgeMaster Home Series\nAppliances, Office Supplies, OFF-AP-3367' not found on Purchase Order.",
+          "invoice_value": "Belkin 7-Outlet SurgeMaster Home Series\nAppliances, Office Supplies, OFF-AP-3367",
+          "po_value": "Not Found",
+          "confidence": 0.9
+        }
+      ],
+      "recommended_action": "flag_for_review",
+      "agent_reasoning": "PO inferred (PO-2024-012) but not explicit on doc.; Quantity difference (Belkin 7-Outlet SurgeMaster Home Series\nAppliances, Office Supplies, OFF-AP-3367 vs Not Found).",
+      "agent_execution_trace": [
+        {
+          "agent": "Document Intelligence",
+          "status": "Success",
+          "confidence": 0.99,
+          "detail": "Extracted 1 line items. Notes: Thanks for your business!\nOrder ID : CA-2012-AS10090140-41266"
+        },
+        {
+          "agent": "Extraction Verifier",
+          "status": "Passed",
+          "confidence": 1.0,
+          "detail": "Math checks passed."
+        },
+        {
+          "agent": "Matching Agent",
+          "status": "Success",
+          "confidence": 0.65,
+          "detail": "Hypothesized PO-2024-012 as best match. Alternatives considered: ['PO-2024-008', 'PO-2024-009']"
+        },
+        {
+          "agent": "Discrepancy Detector",
+          "status": "Flagged",
+          "confidence": 1.0,
+          "detail": "Found 2 discrepancies. Types: missing_po, qty_mismatch"
+        },
+        {
+          "agent": "Resolution Agent",
+          "status": "Complete",
+          "confidence": 1.0,
+          "detail": "Action: flag_for_review. Reason: PO inferred (PO-2024-012) but not explicit on doc.; Quantity difference (Belkin 7-Outlet SurgeMaster Home Series\nAppliances, Office Supplies, OFF-AP-3367 vs Not Found)."
+        }
+      ]
+    }
+  },
+  {
+    "source_file": "invoice_Adam Shillingsburg_40952.pdf",
+    "invoice_id": "UNKNOWN",
+    "processing_results": {
+      "extraction_confidence": 0.7,
+      "extracted_data": {
+        "supplier": "INVOICE",
+        "po_reference": null,
+        "line_items": []
+      },
+      "matching_results": {
+        "matched_po": null,
+        "match_reasoning": "Top matches had low confidence.",
+        "candidates_considered": [
+          {
+            "po_number": "PO-2024-016",
+            "confidence": 0.59,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Quality Excipients Europe (Score: 0.59)"
+          },
+          {
+            "po_number": "PO-2024-005",
+            "confidence": 0.54,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: EuroChem Trading Ltd (Score: 0.54)"
+          },
+          {
+            "po_number": "PO-2024-008",
+            "confidence": 0.54,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: British Pharmaceutical Supply (Score: 0.54)"
+          }
+        ]
+      },
+      "discrepancies": [],
+      "recommended_action": "escalate_to_human",
+      "agent_reasoning": "Low extraction confidence (0.70) requires human eyes.",
+      "agent_execution_trace": [
+        {
+          "agent": "Document Intelligence",
+          "status": "Success",
+          "confidence": 0.7,
+          "detail": "Extracted 0 line items. Notes: The invoice is mostly blank, with no line items or supplier details. The 'Supplier Name' has been inferred from the 'INVOICE' header."
+        },
+        {
+          "agent": "Extraction Verifier",
+          "status": "Passed",
+          "confidence": 1.0,
+          "detail": "Math checks passed."
+        },
+        {
+          "agent": "Matching Agent",
+          "status": "No Match",
+          "confidence": 0.0,
+          "detail": "Top matches had low confidence."
+        },
+        {
+          "agent": "Discrepancy Detector",
+          "status": "Clean",
+          "confidence": 1.0,
+          "detail": "Found 0 discrepancies."
+        },
+        {
+          "agent": "Resolution Agent",
+          "status": "Complete",
+          "confidence": 1.0,
+          "detail": "Action: escalate_to_human. Reason: Low extraction confidence (0.70) requires human eyes."
+        }
+      ]
+    }
+  },
+  {
+    "source_file": "invoice_Adam Shillingsburg_40953.pdf",
+    "invoice_id": "40953",
+    "processing_results": {
+      "extraction_confidence": 0.98,
+      "extracted_data": {
+        "supplier": "SuperStore",
+        "po_reference": null,
+        "line_items": [
+          {
+            "description": "Cardinal Holdit Business Card Pockets\nBinders, Office Supplies, OFF-BI-3729",
+            "quantity": 1.0,
+            "unit_price": 3.98,
+            "line_total": 3.98,
+            "confidence": 0.99
+          }
+        ]
+      },
+      "matching_results": {
+        "matched_po": "PO-2024-005",
+        "match_reasoning": "Hypothesized PO-2024-005 as best match. Alternatives considered: ['PO-2024-007', 'PO-2024-008']",
+        "candidates_considered": [
+          {
+            "po_number": "PO-2024-005",
+            "confidence": 0.61,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: EuroChem Trading Ltd (Score: 0.61)"
+          },
+          {
+            "po_number": "PO-2024-007",
+            "confidence": 0.57,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Nordic Chemicals AB (Score: 0.57)"
+          },
+          {
+            "po_number": "PO-2024-008",
+            "confidence": 0.56,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: British Pharmaceutical Supply (Score: 0.56)"
+          }
+        ]
+      },
+      "discrepancies": [
+        {
+          "type": "missing_po",
+          "severity": "medium",
+          "field": "po_reference",
+          "details": "Document lacks explicit reference to PO-2024-005; match inferred via supplier/content.",
+          "invoice_value": null,
+          "po_value": "PO-2024-005",
+          "confidence": 0.85
+        },
+        {
+          "type": "qty_mismatch",
+          "severity": "medium",
+          "field": "line_item_0",
+          "details": "Item 'Cardinal Holdit Business Card Pockets\nBinders, Office Supplies, OFF-BI-3729' not found on Purchase Order.",
+          "invoice_value": "Cardinal Holdit Business Card Pockets\nBinders, Office Supplies, OFF-BI-3729",
+          "po_value": "Not Found",
+          "confidence": 0.9
+        }
+      ],
+      "recommended_action": "flag_for_review",
+      "agent_reasoning": "PO inferred (PO-2024-005) but not explicit on doc.; Quantity difference (Cardinal Holdit Business Card Pockets\nBinders, Office Supplies, OFF-BI-3729 vs Not Found).",
+      "agent_execution_trace": [
+        {
+          "agent": "Document Intelligence",
+          "status": "Success",
+          "confidence": 0.98,
+          "detail": "Extracted 1 line items. Notes: Thanks for your business!\nOrder ID : CA-2012-AS10090140-41173"
+        },
+        {
+          "agent": "Extraction Verifier",
+          "status": "Passed",
+          "confidence": 1.0,
+          "detail": "Math checks passed."
+        },
+        {
+          "agent": "Matching Agent",
+          "status": "Success",
+          "confidence": 0.61,
+          "detail": "Hypothesized PO-2024-005 as best match. Alternatives considered: ['PO-2024-007', 'PO-2024-008']"
+        },
+        {
+          "agent": "Discrepancy Detector",
+          "status": "Flagged",
+          "confidence": 1.0,
+          "detail": "Found 2 discrepancies. Types: missing_po, qty_mismatch"
+        },
+        {
+          "agent": "Resolution Agent",
+          "status": "Complete",
+          "confidence": 1.0,
+          "detail": "Action: flag_for_review. Reason: PO inferred (PO-2024-005) but not explicit on doc.; Quantity difference (Cardinal Holdit Business Card Pockets\nBinders, Office Supplies, OFF-BI-3729 vs Not Found)."
+        }
+      ]
+    }
+  },
+  {
+    "source_file": "invoice_Adam Shillingsburg_40954.pdf",
+    "invoice_id": "40954",
+    "processing_results": {
+      "extraction_confidence": 0.95,
+      "extracted_data": {
+        "supplier": "SuperStore",
+        "po_reference": null,
+        "line_items": [
+          {
+            "description": "Avery Hi-Liter GlideStik Fluorescent Highlighter, Yellow Ink Art, Office Supplies, OFF-AR-3285",
+            "quantity": 4.0,
+            "unit_price": 13.04,
+            "line_total": 52.16,
+            "confidence": 0.95
+          }
+        ]
+      },
+      "matching_results": {
+        "matched_po": null,
+        "match_reasoning": "Top matches had low confidence.",
+        "candidates_considered": [
+          {
+            "po_number": "PO-2024-005",
+            "confidence": 0.52,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: EuroChem Trading Ltd (Score: 0.52)"
+          },
+          {
+            "po_number": "PO-2024-012",
+            "confidence": 0.52,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Spectrum Chemical Supplies (Score: 0.52)"
+          },
+          {
+            "po_number": "PO-2024-007",
+            "confidence": 0.48,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Nordic Chemicals AB (Score: 0.48)"
+          }
+        ]
+      },
+      "discrepancies": [],
+      "recommended_action": "escalate_to_human",
+      "agent_reasoning": "System uncertainty regarding PO match.",
+      "agent_execution_trace": [
+        {
+          "agent": "Document Intelligence",
+          "status": "Success",
+          "confidence": 0.95,
+          "detail": "Extracted 1 line items. Notes: Thanks for your business!"
+        },
+        {
+          "agent": "Extraction Verifier",
+          "status": "Passed",
+          "confidence": 1.0,
+          "detail": "Math checks passed."
+        },
+        {
+          "agent": "Matching Agent",
+          "status": "No Match",
+          "confidence": 0.0,
+          "detail": "Top matches had low confidence."
+        },
+        {
+          "agent": "Discrepancy Detector",
+          "status": "Clean",
+          "confidence": 1.0,
+          "detail": "Found 0 discrepancies."
+        },
+        {
+          "agent": "Resolution Agent",
+          "status": "Complete",
+          "confidence": 1.0,
+          "detail": "Action: escalate_to_human. Reason: System uncertainty regarding PO match."
+        }
+      ]
+    }
+  },
+  {
+    "source_file": "invoice_Adam Shillingsburg_40955.pdf",
+    "invoice_id": "40955",
+    "processing_results": {
+      "extraction_confidence": 0.98,
+      "extracted_data": {
+        "supplier": "SuperStore",
+        "po_reference": null,
+        "line_items": [
+          {
+            "description": "Office Star - Mid Back Dual function Ergonomic High Back Chair with 2-Way Adjustable Arms Chairs, Furniture, FUR-CH-5430",
+            "quantity": 4.0,
+            "unit_price": 579.53,
+            "line_total": 2318.11,
+            "confidence": 0.98
+          }
+        ]
+      },
+      "matching_results": {
+        "matched_po": "PO-2024-017",
+        "match_reasoning": "Hypothesized PO-2024-017 as best match. Alternatives considered: ['PO-2024-014', 'PO-2024-007']",
+        "candidates_considered": [
+          {
+            "po_number": "PO-2024-017",
+            "confidence": 0.62,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Sigma Chemical Warehouse (Score: 0.62)"
+          },
+          {
+            "po_number": "PO-2024-014",
+            "confidence": 0.59,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Elite Pharmaceutical Materials (Score: 0.59)"
+          },
+          {
+            "po_number": "PO-2024-007",
+            "confidence": 0.57,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Nordic Chemicals AB (Score: 0.57)"
+          }
+        ]
+      },
+      "discrepancies": [
+        {
+          "type": "missing_po",
+          "severity": "medium",
+          "field": "po_reference",
+          "details": "Document lacks explicit reference to PO-2024-017; match inferred via supplier/content.",
+          "invoice_value": null,
+          "po_value": "PO-2024-017",
+          "confidence": 0.85
+        },
+        {
+          "type": "qty_mismatch",
+          "severity": "medium",
+          "field": "line_item_0",
+          "details": "Item 'Office Star - Mid Back Dual function Ergonomic High Back Chair with 2-Way Adjustable Arms Chairs, Furniture, FUR-CH-5430' not found on Purchase Order.",
+          "invoice_value": "Office Star - Mid Back Dual function Ergonomic High Back Chair with 2-Way Adjustable Arms Chairs, Furniture, FUR-CH-5430",
+          "po_value": "Not Found",
+          "confidence": 0.9
+        }
+      ],
+      "recommended_action": "flag_for_review",
+      "agent_reasoning": "PO inferred (PO-2024-017) but not explicit on doc.; Quantity difference (Office Star - Mid Back Dual function Ergonomic High Back Chair with 2-Way Adjustable Arms Chairs, Furniture, FUR-CH-5430 vs Not Found).",
+      "agent_execution_trace": [
+        {
+          "agent": "Document Intelligence",
+          "status": "Success",
+          "confidence": 0.98,
+          "detail": "Extracted 1 line items. Notes: Thanks for your business!\nOrder ID : CA-2012-AS10090140-41173"
+        },
+        {
+          "agent": "Extraction Verifier",
+          "status": "Passed",
+          "confidence": 1.0,
+          "detail": "Math checks passed."
+        },
+        {
+          "agent": "Matching Agent",
+          "status": "Success",
+          "confidence": 0.62,
+          "detail": "Hypothesized PO-2024-017 as best match. Alternatives considered: ['PO-2024-014', 'PO-2024-007']"
+        },
+        {
+          "agent": "Discrepancy Detector",
+          "status": "Flagged",
+          "confidence": 1.0,
+          "detail": "Found 2 discrepancies. Types: missing_po, qty_mismatch"
+        },
+        {
+          "agent": "Resolution Agent",
+          "status": "Complete",
+          "confidence": 1.0,
+          "detail": "Action: flag_for_review. Reason: PO inferred (PO-2024-017) but not explicit on doc.; Quantity difference (Office Star - Mid Back Dual function Ergonomic High Back Chair with 2-Way Adjustable Arms Chairs, Furniture, FUR-CH-5430 vs Not Found)."
+        }
+      ]
+    }
+  },
+  {
+    "source_file": "invoice_Adrian Barton_25445.pdf",
+    "invoice_id": "25445",
+    "processing_results": {
+      "extraction_confidence": 0.99,
+      "extracted_data": {
+        "supplier": "SuperStore",
+        "po_reference": null,
+        "line_items": [
+          {
+            "description": "Sharp Wireless Fax, Digital Copiers, Technology, TEC-CO-6010",
+            "quantity": 3.0,
+            "unit_price": 1066.68,
+            "line_total": 3200.04,
+            "confidence": 0.99
+          }
+        ]
+      },
+      "matching_results": {
+        "matched_po": "PO-2024-005",
+        "match_reasoning": "Hypothesized PO-2024-005 as best match. Alternatives considered: ['PO-2024-015', 'PO-2024-012']",
+        "candidates_considered": [
+          {
+            "po_number": "PO-2024-005",
+            "confidence": 0.64,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: EuroChem Trading Ltd (Score: 0.64)"
+          },
+          {
+            "po_number": "PO-2024-015",
+            "confidence": 0.63,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Industrial Chemicals Direct (Score: 0.63)"
+          },
+          {
+            "po_number": "PO-2024-012",
+            "confidence": 0.62,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Spectrum Chemical Supplies (Score: 0.62)"
+          }
+        ]
+      },
+      "discrepancies": [
+        {
+          "type": "missing_po",
+          "severity": "medium",
+          "field": "po_reference",
+          "details": "Document lacks explicit reference to PO-2024-005; match inferred via supplier/content.",
+          "invoice_value": null,
+          "po_value": "PO-2024-005",
+          "confidence": 0.85
+        },
+        {
+          "type": "qty_mismatch",
+          "severity": "medium",
+          "field": "line_item_0",
+          "details": "Item 'Sharp Wireless Fax, Digital Copiers, Technology, TEC-CO-6010' not found on Purchase Order.",
+          "invoice_value": "Sharp Wireless Fax, Digital Copiers, Technology, TEC-CO-6010",
+          "po_value": "Not Found",
+          "confidence": 0.9
+        }
+      ],
+      "recommended_action": "flag_for_review",
+      "agent_reasoning": "PO inferred (PO-2024-005) but not explicit on doc.; Quantity difference (Sharp Wireless Fax, Digital Copiers, Technology, TEC-CO-6010 vs Not Found).",
+      "agent_execution_trace": [
+        {
+          "agent": "Document Intelligence",
+          "status": "Success",
+          "confidence": 0.99,
+          "detail": "Extracted 1 line items. Notes: Thanks for your business!"
+        },
+        {
+          "agent": "Extraction Verifier",
+          "status": "Passed",
+          "confidence": 1.0,
+          "detail": "Math checks passed."
+        },
+        {
+          "agent": "Matching Agent",
+          "status": "Success",
+          "confidence": 0.64,
+          "detail": "Hypothesized PO-2024-005 as best match. Alternatives considered: ['PO-2024-015', 'PO-2024-012']"
+        },
+        {
+          "agent": "Discrepancy Detector",
+          "status": "Flagged",
+          "confidence": 1.0,
+          "detail": "Found 2 discrepancies. Types: missing_po, qty_mismatch"
+        },
+        {
+          "agent": "Resolution Agent",
+          "status": "Complete",
+          "confidence": 1.0,
+          "detail": "Action: flag_for_review. Reason: PO inferred (PO-2024-005) but not explicit on doc.; Quantity difference (Sharp Wireless Fax, Digital Copiers, Technology, TEC-CO-6010 vs Not Found)."
+        }
+      ]
+    }
+  },
+  {
+    "source_file": "invoice_Adrian Barton_35579.pdf",
+    "invoice_id": "35579",
+    "processing_results": {
+      "extraction_confidence": 0.95,
+      "extracted_data": {
+        "supplier": "SuperStore",
+        "po_reference": null,
+        "line_items": [
+          {
+            "description": "Avery 487\nLabels, Office Supplies, OFF-LA-3206",
+            "quantity": 1.0,
+            "unit_price": 3.69,
+            "line_total": 3.69,
+            "confidence": 0.95
+          }
+        ]
+      },
+      "matching_results": {
+        "matched_po": null,
+        "match_reasoning": "Top matches had low confidence.",
+        "candidates_considered": [
+          {
+            "po_number": "PO-2024-005",
+            "confidence": 0.56,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: EuroChem Trading Ltd (Score: 0.56)"
+          },
+          {
+            "po_number": "PO-2024-020",
+            "confidence": 0.49,
+            "method": "fuzzy_hybrid",
+            "reasoning": "Supplier: Precision Ingredients Group (Score: 0.49)"
+          }
+        ]
+      },
+      "discrepancies": [],
+      "recommended_action": "escalate_to_human",
+      "agent_reasoning": "System uncertainty regarding PO match.",
+      "agent_execution_trace": [
+        {
+          "agent": "Document Intelligence",
+          "status": "Success",
+          "confidence": 0.95,
+          "detail": "Extracted 1 line items. Notes: Thanks for your business!\nOrder ID : CA-2012-AB10105140-41262"
+        },
+        {
+          "agent": "Extraction Verifier",
+          "status": "Passed",
+          "confidence": 1.0,
+          "detail": "Math checks passed."
+        },
+        {
+          "agent": "Matching Agent",
+          "status": "No Match",
+          "confidence": 0.0,
+          "detail": "Top matches had low confidence."
+        },
+        {
+          "agent": "Discrepancy Detector",
+          "status": "Clean",
+          "confidence": 1.0,
+          "detail": "Found 0 discrepancies."
+        },
+        {
+          "agent": "Resolution Agent",
+          "status": "Complete",
+          "confidence": 1.0,
+          "detail": "Action: escalate_to_human. Reason: System uncertainty regarding PO match."
+        }
+      ]
+    }
   }
 ]
