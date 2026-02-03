@@ -10,6 +10,7 @@ dependencies = [
     "langchain-google-genai>=4.2.0",
     "langchain-huggingface>=1.2.0",
     "langgraph>=1.0.7",
+    "pypdf>=6.6.2",
     "python-dotenv>=1.2.1",
     "sentence-transformers>=5.2.2",
     "streamlit>=1.52.2",

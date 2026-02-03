@@ -1,6 +1,41 @@
-from typing import List, Optional, Literal, Dict, Any
-from pydantic import BaseModel, Field
 
+from pydantic import BaseModel, Field
+import operator
+from typing import TypedDict, Annotated, List, Dict, Any, Optional, Union
+from langgraph.graph.message import add_messages
+
+class AgentState(TypedDict):
+    # The list of chat messages (Human, AI, Tool)
+    messages: Annotated[list, add_messages]
+    
+    # --- File & Security Tracking ---
+    file_path: str
+    fraud_warning: Optional[str]
+    
+    # --- Extraction Data ---
+    extracted_items: List[Dict[str, Any]]  # This was causing your error!
+    extraction_confidence: float
+    extraction_reasoning: str
+    
+    # --- Verification Data ---
+    math_verification_passed: bool
+    verification_flags: List[str]
+    retry_count: int
+    
+    # --- Matching Data ---
+    matched_po_id: Optional[str]
+    match_candidates: List[Any]
+    match_reasoning: str
+    
+    # --- Discrepancy Data ---
+    discrepancies: List[Any]
+    
+    # --- Final Resolution ---
+    final_action: str
+    final_report_reasoning: str
+    
+    # --- Audit Trail ---
+    agent_trace: List[Dict[str, Any]]
 
 class ExtractedLineItem(BaseModel):
     description: str
@@ -26,35 +61,3 @@ class POMatchCandidate(BaseModel):
     method: str
     reasoning: str
 
-
-class AgentState(BaseModel):
-
-    file_path: str
-
- 
-    retry_count: int = 0
-    agent_trace: List[Dict[str, Any]] = Field(default_factory=list)
-
-    extracted_invoice_id: Optional[str] = None
-    extracted_supplier: Optional[str] = None
-    extracted_date: Optional[str] = None
-    extracted_po_ref: Optional[str] = None
-    extracted_items: List[ExtractedLineItem] = Field(default_factory=list)
-    extraction_confidence: float = 0.0
-    extraction_reasoning: str = ""
-
-
-    verification_flags: List[str] = Field(default_factory=list)
-    math_verification_passed: bool = False
-
-
-    matched_po_id: Optional[str] = None
-    match_candidates: List[POMatchCandidate] = Field(default_factory=list)
-    match_reasoning: str = ""
-
-
-    discrepancies: List[Discrepancy] = Field(default_factory=list)
-
-
-    final_action: str = "pending"
-    final_report_reasoning: str = ""

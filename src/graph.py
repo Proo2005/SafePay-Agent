@@ -5,12 +5,51 @@ from src.agents.verifier import ExtractionVerifier
 from src.agents.matching import MatchingAgent
 from src.agents.discrepancy import DiscrepancyDetectorAgent
 from src.agents.resolution import ResolutionAgent
+# 1. New Import for Fraud Check
+from src.fraud_check import check_pdf_integrity
 
 def extract_node(state: AgentState):
+    """
+    Step 1: Checks PDF for tampering (Photoshop, etc).
+    Step 2: If clean, runs AI extraction.
+    """
+    # --- 🕵️ SECURITY LAYER START ---
+    print("\n🕵️  --- SECURITY CHECK INITIATED ---")
+    
+    # We use .get() in case file_path isn't set yet
+    file_path = state.get("file_path", "") 
+    
+    # Run the check
+    is_suspicious, reason = check_pdf_integrity(file_path)
+    
+    if is_suspicious:
+        print(f"🚨 FRAUD ALERT: {reason}")
+        
+        # Log the fraud detection in the trace so the final agent sees it
+        state.agent_trace.append(
+            {
+                "agent": "Fraud Detector",
+                "status": "Suspicious",
+                "confidence": 1.0,
+                "detail": f"⚠️ BLOCKED: {reason}",
+            }
+        )
+        
+        # Set the warning flag in the state
+        state.fraud_warning = f"⚠️ SECURITY RISK: {reason}"
+        
+        # ⛔ STOP HERE. Do not send malicious files to the AI.
+        # We return the state immediately. The next node (verify) will run, 
+        # see empty data, and eventually the Resolution Agent will reject it.
+        return state
+        
+    print(f"✅ Security Check Passed: {reason}")
+    # --- SECURITY LAYER END ---
+
+    # If safe, proceed with normal AI extraction
     agent = DocumentIntelligenceAgent()
     new_state = agent.process(state)
 
-    
     new_state.agent_trace.append(
         {
             "agent": "Document Intelligence",
@@ -23,10 +62,20 @@ def extract_node(state: AgentState):
 
 
 def verify_node(state: AgentState):
+    # If we skipped extraction due to fraud, extracted_items will be empty.
+    # We handle that gracefully.
+    if state.fraud_warning:
+        state.agent_trace.append({
+            "agent": "Extraction Verifier",
+            "status": "Skipped",
+            "confidence": 1.0,
+            "detail": "Skipped verification due to fraud alert."
+        })
+        return state
+
     agent = ExtractionVerifier()
     new_state = agent.verify(state)
 
-   
     status = "Passed" if new_state.math_verification_passed else "Failed"
     detail = (
         "Math checks passed."
@@ -63,7 +112,16 @@ def retry_node(state: AgentState):
 
 
 def match_node(state: AgentState):
-  
+    # Skip matching if fraud detected
+    if state.fraud_warning:
+        state.agent_trace.append({
+            "agent": "Matching Agent",
+            "status": "Skipped",
+            "confidence": 1.0,
+            "detail": "Skipped matching due to fraud alert."
+        })
+        return state
+
     agent = MatchingAgent(db_path="data/purchase_orders.json")
     new_state = agent.match(state)
 
@@ -90,6 +148,10 @@ def match_node(state: AgentState):
 
 
 def discrepancy_node(state: AgentState):
+    # Skip checks if fraud detected
+    if state.fraud_warning:
+        return state
+
     agent = DiscrepancyDetectorAgent(db_path="data/purchase_orders.json")
     new_state = agent.check(state)
 
@@ -111,6 +173,18 @@ def discrepancy_node(state: AgentState):
 
 
 def resolution_node(state: AgentState):
+    # If fraud was detected earlier, we force a rejection here.
+    if state.fraud_warning:
+        state.final_action = "REJECT"
+        state.final_report_reasoning = f"⛔ SECURITY PROTOCOL: {state.fraud_warning}"
+        state.agent_trace.append({
+            "agent": "Resolution Agent",
+            "status": "Complete",
+            "confidence": 1.0,
+            "detail": "Automatically Rejected due to Security Alert."
+        })
+        return state
+
     agent = ResolutionAgent()
     new_state = agent.resolve(state)
 
@@ -130,6 +204,10 @@ def should_retry_extraction(state: AgentState):
     Decides if we should loop back.
     Checks state, returns string. Does NOT modify state.
     """
+    # Don't retry if it's fraud
+    if state.fraud_warning:
+        return "continue"
+
     if not state.math_verification_passed and state.retry_count < 1:
         return "retry"
     return "continue"
@@ -137,14 +215,12 @@ def should_retry_extraction(state: AgentState):
 def build_graph():
     builder = StateGraph(AgentState)
 
-  
     builder.add_node("extract", extract_node)
     builder.add_node("verify", verify_node)
     builder.add_node("retry_logic", retry_node)  
     builder.add_node("match", match_node)
     builder.add_node("discrepancy", discrepancy_node)
     builder.add_node("resolve", resolution_node)
-
 
     builder.set_entry_point("extract")
 
